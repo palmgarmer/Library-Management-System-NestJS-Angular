@@ -1,0 +1,41 @@
+{
+  "name": "library-management-system",
+  "version": "1.0.0",
+  "description": "A comprehensive full-stack library management system built with NestJS, MongoDB, and Angular",
+  "author": "Palm Garmer",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/palmgarmer/Library-Management-System-NestJS-Angular.git"
+  },
+  "scripts": {
+    "backend:install": "cd backend && npm install",
+    "backend:dev": "cd backend && npm run start:dev",
+    "backend:build": "cd backend && npm run build",
+    "backend:start": "cd backend && npm run start:prod",
+    "backend:test": "cd backend && npm run test",
+    "backend:test:e2e": "cd backend && npm run test:e2e",
+    "backend:lint": "cd backend && npm run lint",
+    "backend:format": "cd backend && npm run format",
+    "frontend:install": "cd frontend && npm install",
+    "frontend:dev": "cd frontend && npm start",
+    "frontend:build": "cd frontend && npm run build",
+    "frontend:test": "cd frontend && npm test",
+    "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
+    "install:all": "npm run backend:install && npm run frontend:install",
+    "postinstall": "npm run backend:install"
+  },
+  "keywords": [
+    "library",
+    "management",
+    "nestjs",
+    "angular",
+    "mongodb",
+    "typescript",
+    "api",
+    "rest"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

@@ -1,0 +1,541 @@
+{
+  "info": {
+    "name": "Library Management System API",
+    "description": "Complete API collection for the Library Management System built with NestJS and MongoDB. Includes endpoints for Books, Authors, and Borrowers with full CRUD operations.",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "{{baseUrl}}",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Get API Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": ["{{baseUrl}}"],
+              "path": [""]
+            },
+            "description": "Check if the API is running"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Books",
+      "item": [
+        {
+          "name": "Create Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"The Great Gatsby\",\n  \"authorId\": \"{{authorId}}\",\n  \"isbn\": \"978-0-7432-7356-5\",\n  \"publishedDate\": \"1925-04-10\",\n  \"genre\": \"Fiction\",\n  \"summary\": \"A classic American novel set in the summer of 1922\",\n  \"totalCopies\": 5,\n  \"availableCopies\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"]
+            },
+            "description": "Create a new book in the library system"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"]
+            },
+            "description": "Retrieve all books from the library"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Book by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books/{{bookId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["books", "{{bookId}}"]
+            },
+            "description": "Retrieve a specific book by its ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Book",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"The Great Gatsby - Updated Edition\",\n  \"availableCopies\": 3,\n  \"summary\": \"A classic American novel set in the summer of 1922 - Updated summary\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/books/{{bookId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["books", "{{bookId}}"]
+            },
+            "description": "Update an existing book's information"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Book",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books/{{bookId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["books", "{{bookId}}"]
+            },
+            "description": "Delete a book from the library system"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authors",
+      "item": [
+        {
+          "name": "Create Author",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"F. Scott Fitzgerald\",\n  \"biography\": \"American novelist and short story writer, widely regarded as one of the greatest American writers of the 20th century.\",\n  \"birthDate\": \"1896-09-24\",\n  \"nationality\": \"American\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/authors",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors"]
+            },
+            "description": "Create a new author in the system"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Authors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/authors",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors"]
+            },
+            "description": "Retrieve all authors from the system"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Author by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/authors/{{authorId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors", "{{authorId}}"]
+            },
+            "description": "Retrieve a specific author by their ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Books by Author",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/authors/{{authorId}}/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors", "{{authorId}}", "books"]
+            },
+            "description": "Retrieve all books written by a specific author"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Author",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"biography\": \"American novelist and short story writer, widely regarded as one of the greatest American writers of the 20th century. Best known for his novel The Great Gatsby.\",\n  \"nationality\": \"American\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/authors/{{authorId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors", "{{authorId}}"]
+            },
+            "description": "Update an existing author's information"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Author",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/authors/{{authorId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors", "{{authorId}}"]
+            },
+            "description": "Delete an author from the system"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Borrowers",
+      "item": [
+        {
+          "name": "Create Borrower",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"+1-555-0123\",\n  \"membershipStatus\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/borrowers",
+              "host": ["{{baseUrl}}"],
+              "path": ["borrowers"]
+            },
+            "description": "Create a new borrower in the library system"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Borrowers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/borrowers",
+              "host": ["{{baseUrl}}"],
+              "path": ["borrowers"]
+            },
+            "description": "Retrieve all borrowers from the library system"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Borrower by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/borrowers/{{borrowerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["borrowers", "{{borrowerId}}"]
+            },
+            "description": "Retrieve a specific borrower by their ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Borrower",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"+1-555-9999\",\n  \"membershipStatus\": \"suspended\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/borrowers/{{borrowerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["borrowers", "{{borrowerId}}"]
+            },
+            "description": "Update an existing borrower's information"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Borrower",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/borrowers/{{borrowerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["borrowers", "{{borrowerId}}"]
+            },
+            "description": "Delete a borrower from the library system"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Test Data Creation",
+      "item": [
+        {
+          "name": "Create Sample Author",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const responseJson = pm.response.json();",
+                  "  pm.environment.set('authorId', responseJson._id);",
+                  "  console.log('Author ID set to:', responseJson._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Agatha Christie\",\n  \"biography\": \"English writer known for her sixty-six detective novels and fourteen short story collections, particularly those revolving around fictional detectives Hercule Poirot and Miss Marple.\",\n  \"birthDate\": \"1890-09-15\",\n  \"nationality\": \"British\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/authors",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors"]
+            },
+            "description": "Create a sample author and save the ID for subsequent requests"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Sample Book",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const responseJson = pm.response.json();",
+                  "  pm.environment.set('bookId', responseJson._id);",
+                  "  console.log('Book ID set to:', responseJson._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Murder on the Orient Express\",\n  \"authorId\": \"{{authorId}}\",\n  \"isbn\": \"978-0-00-712939-6\",\n  \"publishedDate\": \"1934-01-01\",\n  \"genre\": \"Mystery\",\n  \"summary\": \"A Hercule Poirot mystery novel featuring the famous Belgian detective solving a murder aboard the Orient Express.\",\n  \"totalCopies\": 3,\n  \"availableCopies\": 3\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"]
+            },
+            "description": "Create a sample book and save the ID for subsequent requests"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Sample Borrower",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const responseJson = pm.response.json();",
+                  "  pm.environment.set('borrowerId', responseJson._id);",
+                  "  console.log('Borrower ID set to:', responseJson._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Emily Davis\",\n  \"email\": \"emily.davis@example.com\",\n  \"phone\": \"+1-555-7890\",\n  \"membershipStatus\": \"active\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/borrowers",
+              "host": ["{{baseUrl}}"],
+              "path": ["borrowers"]
+            },
+            "description": "Create a sample borrower and save the ID for subsequent requests"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error Handling Tests",
+      "item": [
+        {
+          "name": "Get Non-existent Book",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/books/507f1f77bcf86cd799439011",
+              "host": ["{{baseUrl}}"],
+              "path": ["books", "507f1f77bcf86cd799439011"]
+            },
+            "description": "Test error handling for non-existent book ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Non-existent Author",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/authors/507f1f77bcf86cd799439011",
+              "host": ["{{baseUrl}}"],
+              "path": ["authors", "507f1f77bcf86cd799439011"]
+            },
+            "description": "Test error handling for non-existent author ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Non-existent Borrower",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/borrowers/507f1f77bcf86cd799439011",
+              "host": ["{{baseUrl}}"],
+              "path": ["borrowers", "507f1f77bcf86cd799439011"]
+            },
+            "description": "Test error handling for non-existent borrower ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Invalid Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"\",\n  \"authorId\": \"invalid-id\",\n  \"isbn\": \"invalid-isbn\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/books",
+              "host": ["{{baseUrl}}"],
+              "path": ["books"]
+            },
+            "description": "Test validation errors when creating a book with invalid data"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Invalid Borrower",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"\",\n  \"email\": \"invalid-email\",\n  \"membershipStatus\": \"invalid-status\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/borrowers",
+              "host": ["{{baseUrl}}"],
+              "path": ["borrowers"]
+            },
+            "description": "Test validation errors when creating a borrower with invalid data"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
