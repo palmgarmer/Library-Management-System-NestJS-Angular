@@ -1,0 +1,79 @@
+<div class="book-list-container">
+  <!-- Header Section -->
+  <div class="page-header">
+    <h1 class="page-title">📚 Book Management</h1>
+    <button class="btn btn-primary" (click)="onAddBook()">
+      <span class="btn-icon">➕</span>
+      Add New Book
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading books...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error && !isLoading) {
+    <div class="error-container">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error }}</p>
+      <button class="btn btn-secondary" (click)="loadBooks()">Try Again</button>
+    </div>
+  }
+
+  <!-- Books Table -->
+  @if (!isLoading && !error) {
+    <div class="table-container">
+      @if (books.length === 0) {
+        <div class="empty-state">
+          <span class="empty-icon">📚</span>
+          <h3>No Books Found</h3>
+          <p>Get started by adding your first book to the library.</p>
+          <button class="btn btn-primary" (click)="onAddBook()">Add First Book</button>
+        </div>
+      } @else {
+        <table class="books-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>ISBN</th>
+              <th>Genre</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (book of books; track book._id) {
+              <tr>
+                <td class="book-title">{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>
+                  <span class="genre-badge">{{ book.genre }}</span>
+                </td>
+                <td>
+                  <span class="status-badge" [class]="book.availableCopies > 0 ? 'available' : 'borrowed'">
+                    {{ book.availableCopies > 0 ? 'Available (' + book.availableCopies + ')' : 'All Borrowed' }}
+                  </span>
+                </td>
+                <td class="actions">
+                  <button class="btn-icon-small btn-edit" (click)="onEditBook(book)" title="Edit Book">
+                    ✏️
+                  </button>
+                  <button class="btn-icon-small btn-delete" (click)="onDeleteBook(book)" title="Delete Book">
+                    🗑️
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+</div>
