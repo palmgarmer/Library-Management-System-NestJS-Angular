@@ -33,36 +33,35 @@
 }
 
 .stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-radius: 12px !important;
-  overflow: hidden;
   
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
   }
   
-  mat-card-header {
-    padding: 16px 16px 0 16px;
+  .stat-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
     
-    mat-card-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .stat-icon {
+      font-size: 1.5rem;
+    }
+    
+    .stat-title {
       font-size: 1.1rem;
       font-weight: 500;
       color: #333;
-      
-      mat-icon {
-        font-size: 24px;
-        width: 24px;
-        height: 24px;
-      }
     }
   }
   
-  mat-card-content {
-    padding: 16px !important;
+  .stat-content {
     text-align: center;
   }
   
@@ -84,7 +83,7 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     
-    mat-card-title, .stat-label {
+    .stat-title, .stat-label {
       color: rgba(255,255,255,0.9);
     }
   }
@@ -93,7 +92,7 @@
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     color: white;
     
-    mat-card-title, .stat-label {
+    .stat-title, .stat-label {
       color: rgba(255,255,255,0.9);
     }
   }
@@ -102,7 +101,7 @@
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: white;
     
-    mat-card-title, .stat-label {
+    .stat-title, .stat-label {
       color: rgba(255,255,255,0.9);
     }
   }
@@ -111,7 +110,7 @@
     background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
     color: white;
     
-    mat-card-title, .stat-label {
+    .stat-title, .stat-label {
       color: rgba(255,255,255,0.9);
     }
   }
@@ -137,22 +136,40 @@
 .action-button {
   height: 60px;
   font-size: 1.1rem;
-  border-radius: 8px !important;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   transition: all 0.3s ease;
+  border: none;
+  background: white;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
   
-  mat-icon {
-    font-size: 24px;
-    width: 24px;
-    height: 24px;
+  .button-icon {
+    font-size: 1.2rem;
+  }
+  
+  &.primary {
+    background: #1976d2;
+    color: white;
+  }
+  
+  &.accent {
+    background: #ff4081;
+    color: white;
+  }
+  
+  &.warn {
+    background: #f44336;
+    color: white;
   }
 }
 
@@ -166,11 +183,10 @@
 }
 
 .activity-card {
-  border-radius: 12px !important;
-  
-  mat-card-content {
-    padding: 0 !important;
-  }
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
 }
 
 .no-activity {
@@ -178,10 +194,8 @@
   padding: 48px 24px;
   color: #666;
   
-  mat-icon {
-    font-size: 48px;
-    width: 48px;
-    height: 48px;
+  .activity-icon {
+    font-size: 3rem;
     margin-bottom: 16px;
     opacity: 0.5;
   }
@@ -211,10 +225,8 @@
 .activity-icon {
   margin-right: 16px;
   
-  mat-icon {
-    font-size: 24px;
-    width: 24px;
-    height: 24px;
+  span {
+    font-size: 1.5rem;
     
     &.icon-borrowed {
       color: #4caf50;
@@ -278,7 +290,13 @@
   justify-content: center;
   padding: 48px;
   
-  mat-spinner {
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #1976d2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
     margin-bottom: 16px;
   }
   
@@ -286,6 +304,11 @@
     color: #666;
     font-size: 1.1rem;
   }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 // Responsive Design

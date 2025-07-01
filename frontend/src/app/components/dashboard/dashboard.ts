@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ApiService } from '../../services/api.service';
 import { Lending, LendingStatus } from '../../models/lending.model';
 import { Book } from '../../models/book.model';
@@ -23,10 +19,7 @@ interface DashboardStats {
   selector: 'app-dashboard',
   imports: [
     CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatProgressSpinnerModule
+    TitleCasePipe
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
