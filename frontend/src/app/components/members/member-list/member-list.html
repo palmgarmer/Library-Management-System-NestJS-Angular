@@ -1,0 +1,81 @@
+<div class="member-list-container">
+  <!-- Header Section -->
+  <div class="page-header">
+    <h1 class="page-title">👥 Member Management</h1>
+    <button class="btn btn-primary" (click)="onAddMember()">
+      <span class="btn-icon">➕</span>
+      Add New Member
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading members...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error && !isLoading) {
+    <div class="error-container">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error }}</p>
+      <button class="btn btn-secondary" (click)="loadMembers()">Try Again</button>
+    </div>
+  }
+
+  <!-- Members Table -->
+  @if (!isLoading && !error) {
+    <div class="table-container">
+      @if (members.length === 0) {
+        <div class="empty-state">
+          <span class="empty-icon">👥</span>
+          <h3>No Members Found</h3>
+          <p>Get started by adding your first library member.</p>
+          <button class="btn btn-primary" (click)="onAddMember()">Add First Member</button>
+        </div>
+      } @else {
+        <table class="members-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Member ID</th>
+              <th>Join Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (member of members; track member._id) {
+              <tr>
+                <td class="member-name">{{ member.name }}</td>
+                <td>{{ member.email }}</td>
+                <td>{{ member.phone || 'N/A' }}</td>
+                <td>
+                  <span class="member-id">{{ (member._id?.slice(-6) || 'N/A').toUpperCase() }}</span>
+                </td>
+                <td>{{ formatDate(member.membershipDate) }}</td>
+                <td>
+                  <span class="status-badge" [class]="member.membershipStatus">
+                    {{ member.membershipStatus | titlecase }}
+                  </span>
+                </td>
+                <td class="actions">
+                  <button class="btn-icon-small btn-edit" (click)="onEditMember(member)" title="Edit Member">
+                    ✏️
+                  </button>
+                  <button class="btn-icon-small btn-delete" (click)="onDeleteMember(member)" title="Delete Member">
+                    🗑️
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  }
+</div>
