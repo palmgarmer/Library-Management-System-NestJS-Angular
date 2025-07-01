@@ -1,0 +1,181 @@
+<div class="lending-container">
+  <!-- Header Section -->
+  <div class="page-header">
+    <h1 class="page-title">📋 Lending Management</h1>
+    <div class="stats-summary">
+      <div class="stat-item">
+        <span class="stat-number">{{ currentLoans.length }}</span>
+        <span class="stat-label">Active Loans</span>
+      </div>
+      <div class="stat-item overdue">
+        <span class="stat-number">{{ overdueLoans.length }}</span>
+        <span class="stat-label">Overdue</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="tab-navigation">
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'current'"
+      (click)="setActiveTab('current')"
+    >
+      📚 Current Loans ({{ currentLoans.length }})
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'borrow'"
+      (click)="setActiveTab('borrow')"
+    >
+      ➕ Borrow Book
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="activeTab === 'overdue'"
+      (click)="setActiveTab('overdue')"
+    >
+      ⚠️ Overdue ({{ overdueLoans.length }})
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading lending data...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (error && !isLoading) {
+    <div class="error-container">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error }}</p>
+      <button class="btn btn-secondary" (click)="loadLendingData()">Try Again</button>
+    </div>
+  }
+
+  <!-- Tab Content -->
+  @if (!isLoading && !error) {
+    <div class="tab-content">
+      
+      <!-- Current Loans Tab -->
+      @if (activeTab === 'current') {
+        <div class="loans-section">
+          @if (currentLoans.length === 0) {
+            <div class="empty-state">
+              <span class="empty-icon">📚</span>
+              <h3>No Active Loans</h3>
+              <p>All books are currently returned. Use the "Borrow Book" tab to lend books to members.</p>
+            </div>
+          } @else {
+            <div class="loans-table-container">
+              <table class="loans-table">
+                <thead>
+                  <tr>
+                    <th>Book</th>
+                    <th>Borrower</th>
+                    <th>Borrow Date</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (loan of currentLoans; track loan._id) {
+                    <tr [class.overdue-row]="isOverdue(loan.dueDate)">
+                      <td class="book-title">{{ loan.book?.title || 'Unknown Book' }}</td>
+                      <td>{{ loan.borrower?.name || 'Unknown Borrower' }}</td>
+                      <td>{{ formatDate(loan.borrowDate) }}</td>
+                      <td>
+                        <span [class.overdue-date]="isOverdue(loan.dueDate)">
+                          {{ formatDate(loan.dueDate) }}
+                          @if (isOverdue(loan.dueDate)) {
+                            <span class="days-overdue">({{ getDaysOverdue(loan.dueDate) }} days overdue)</span>
+                          }
+                        </span>
+                      </td>
+                      <td>
+                        <span class="status-badge" [class]="loan.status">
+                          {{ loan.status | titlecase }}
+                        </span>
+                      </td>
+                      <td>
+                        <button 
+                          class="btn btn-return" 
+                          (click)="onReturnBook(loan)"
+                          title="Return Book"
+                        >
+                          ↩️ Return
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Borrow Book Tab -->
+      @if (activeTab === 'borrow') {
+        <app-borrow-form (bookBorrowed)="onBookBorrowed()"></app-borrow-form>
+      }
+
+      <!-- Overdue Loans Tab -->
+      @if (activeTab === 'overdue') {
+        <div class="overdue-section">
+          @if (overdueLoans.length === 0) {
+            <div class="empty-state success">
+              <span class="empty-icon">✅</span>
+              <h3>No Overdue Books</h3>
+              <p>Great! All borrowed books are returned on time or within the due date.</p>
+            </div>
+          } @else {
+            <div class="overdue-alert">
+              <span class="alert-icon">⚠️</span>
+              <p><strong>{{ overdueLoans.length }}</strong> book(s) are overdue and need immediate attention.</p>
+            </div>
+            
+            <div class="loans-table-container">
+              <table class="loans-table overdue-table">
+                <thead>
+                  <tr>
+                    <th>Book</th>
+                    <th>Borrower</th>
+                    <th>Due Date</th>
+                    <th>Days Overdue</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (loan of overdueLoans; track loan._id) {
+                    <tr class="overdue-row">
+                      <td class="book-title">{{ loan.book?.title || 'Unknown Book' }}</td>
+                      <td>{{ loan.borrower?.name || 'Unknown Borrower' }}</td>
+                      <td class="overdue-date">{{ formatDate(loan.dueDate) }}</td>
+                      <td class="days-overdue-cell">
+                        <span class="days-count">{{ getDaysOverdue(loan.dueDate) }}</span> days
+                      </td>
+                      <td>
+                        <button 
+                          class="btn btn-return urgent" 
+                          (click)="onReturnBook(loan)"
+                          title="Return Overdue Book"
+                        >
+                          ↩️ Return Now
+                        </button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

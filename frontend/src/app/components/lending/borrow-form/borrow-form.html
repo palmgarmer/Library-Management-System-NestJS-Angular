@@ -1,0 +1,103 @@
+<div class="borrow-form-container">
+  <h3 class="form-title">📋 Borrow a Book</h3>
+  
+  <!-- Loading State -->
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading books and members...</p>
+    </div>
+  }
+  
+  <!-- Error State -->
+  @if (error && !isLoading) {
+    <div class="error-alert">
+      <span class="error-icon">⚠️</span>
+      {{ error }}
+    </div>
+  }
+  
+  <!-- Borrow Form -->
+  @if (!isLoading) {
+    <form [formGroup]="borrowForm" (ngSubmit)="onSubmit()" class="borrow-form">
+      <!-- Book Selection -->
+      <div class="form-group">
+        <label for="bookId">Select Book</label>
+        <select id="bookId" formControlName="bookId" class="form-control">
+          <option value="">Choose a book...</option>
+          @for (book of books; track book._id) {
+            <option [value]="book._id">
+              {{ book.title }} ({{ book.availableCopies }} available)
+            </option>
+          }
+        </select>
+        @if (borrowForm.get('bookId')?.invalid && borrowForm.get('bookId')?.touched) {
+          <div class="error-message">Please select a book</div>
+        }
+      </div>
+      
+      <!-- Borrower Selection -->
+      <div class="form-group">
+        <label for="borrowerId">Select Member</label>
+        <select id="borrowerId" formControlName="borrowerId" class="form-control">
+          <option value="">Choose a member...</option>
+          @for (borrower of borrowers; track borrower._id) {
+            <option [value]="borrower._id">
+              {{ borrower.name }} ({{ borrower.email }})
+            </option>
+          }
+        </select>
+        @if (borrowForm.get('borrowerId')?.invalid && borrowForm.get('borrowerId')?.touched) {
+          <div class="error-message">Please select a member</div>
+        }
+      </div>
+      
+      <!-- Due Date -->
+      <div class="form-group">
+        <label for="dueDate">Due Date</label>
+        <input 
+          type="date" 
+          id="dueDate" 
+          formControlName="dueDate" 
+          class="form-control"
+          [min]="getTomorrowDate()"
+        >
+        @if (borrowForm.get('dueDate')?.invalid && borrowForm.get('dueDate')?.touched) {
+          <div class="error-message">Please select a due date</div>
+        }
+      </div>
+      
+      <!-- Form Summary -->
+      @if (borrowForm.get('bookId')?.value && borrowForm.get('borrowerId')?.value) {
+        <div class="form-summary">
+          <h4>📝 Loan Summary</h4>
+          <div class="summary-item">
+            <strong>Book:</strong> {{ getSelectedBookTitle() }}
+          </div>
+          <div class="summary-item">
+            <strong>Member:</strong> {{ getSelectedBorrowerName() }}
+          </div>
+          <div class="summary-item">
+            <strong>Due Date:</strong> {{ borrowForm.get('dueDate')?.value | date:'mediumDate' }}
+          </div>
+        </div>
+      }
+      
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="borrowForm.invalid || isSubmitting"
+        >
+          @if (isSubmitting) {
+            <span class="btn-spinner"></span>
+            Processing...
+          } @else {
+            📚 Lend Book
+          }
+        </button>
+      </div>
+    </form>
+  }
+</div>
