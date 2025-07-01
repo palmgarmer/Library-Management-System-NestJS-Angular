@@ -89,13 +89,13 @@ export class DashboardComponent implements OnInit {
   getActivityIcon(status: LendingStatus): string {
     switch (status) {
       case LendingStatus.BORROWED:
-        return 'assignment_turned_in';
+        return '📚';
       case LendingStatus.RETURNED:
-        return 'assignment_return';
+        return '✅';
       case LendingStatus.OVERDUE:
-        return 'warning';
+        return '⚠️';
       default:
-        return 'assignment';
+        return '📋';
     }
   }
 
@@ -120,14 +120,4 @@ export class DashboardComponent implements OnInit {
       year: 'numeric'
     });
   }
-}
-
-@Component({
-  selector: 'app-dashboard',
-  imports: [],
-  templateUrl: './dashboard.html',
-  styleUrl: './dashboard.scss'
-})
-export class Dashboard {
-
 }

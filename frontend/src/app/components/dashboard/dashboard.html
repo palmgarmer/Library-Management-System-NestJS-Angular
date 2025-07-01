@@ -82,38 +82,44 @@
   <div class="recent-activity-section">
     <h2>Recent Activity</h2>
     <div class="activity-card">
-      <div *ngIf="recentLendings.length === 0" class="no-activity">
-        <span class="activity-icon">ℹ️</span>
-        <p>No recent lending activity</p>
-      </div>
+      @if (recentLendings.length === 0) {
+        <div class="no-activity">
+          <span class="activity-icon">ℹ️</span>
+          <p>No recent lending activity</p>
+        </div>
+      }
       
-      <div *ngFor="let lending of recentLendings" class="activity-item">
-        <div class="activity-icon">
-          <span [ngClass]="getActivityIconClass(lending.status)">
-            {{ getActivityIcon(lending.status) }}
-          </span>
-        </div>
-        <div class="activity-details">
-          <div class="activity-title">
-            {{ lending.book?.title || 'Unknown Book' }}
+      @for (lending of recentLendings; track lending._id) {
+        <div class="activity-item">
+          <div class="activity-icon">
+            <span [class]="getActivityIconClass(lending.status)">
+              {{ getActivityIcon(lending.status) }}
+            </span>
           </div>
-          <div class="activity-subtitle">
-            {{ lending.borrower?.name || 'Unknown Borrower' }} • 
-            {{ formatDate(lending.borrowDate) }}
+          <div class="activity-details">
+            <div class="activity-title">
+              {{ lending.book?.title || 'Unknown Book' }}
+            </div>
+            <div class="activity-subtitle">
+              {{ lending.borrower?.name || 'Unknown Borrower' }} • 
+              {{ formatDate(lending.borrowDate) }}
+            </div>
+          </div>
+          <div class="activity-status">
+            <span class="status-badge" [class]="lending.status">
+              {{ lending.status | titlecase }}
+            </span>
           </div>
         </div>
-        <div class="activity-status">
-          <span class="status-badge" [ngClass]="lending.status">
-            {{ lending.status | titlecase }}
-          </span>
-        </div>
-      </div>
+      }
     </div>
   </div>
 
   <!-- Loading Indicator -->
-  <div *ngIf="isLoading" class="loading-container">
-    <div class="spinner"></div>
-    <p>Loading dashboard data...</p>
-  </div>
+  @if (isLoading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading dashboard data...</p>
+    </div>
+  }
 </div>
