@@ -100,10 +100,82 @@
 }
 
 .error-message {
-  color: #dc3545;
-  font-size: 0.85rem;
-  margin-top: 4px;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #d32f2f;
+  font-size: 0.875rem;
+  margin-top: 6px;
+  padding: 4px 0;
+  
+  &::before {
+    content: '⚠️';
+    font-size: 0.8rem;
+  }
+}
+
+.success-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+  border: 1px solid #4caf50;
+  border-radius: 8px;
+  color: #2e7d32;
+  margin-bottom: 20px;
+  animation: slideIn 0.3s ease-out;
+  
+  .success-icon {
+    font-size: 1.2rem;
+  }
+}
+
+.info-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #e3f2fd;
+  border: 1px solid #2196f3;
+  border-radius: 6px;
+  color: #1565c0;
+  font-size: 0.875rem;
+  margin-top: 8px;
+  
+  .info-icon {
+    font-size: 0.9rem;
+  }
+}
+
+.help-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 6px;
+  
+  .help-icon {
+    font-size: 0.7rem;
+  }
+}
+
+.form-validation-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ff9800;
+  font-size: 0.875rem;
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: #fff3e0;
+  border-radius: 6px;
+  border: 1px solid #ffb74d;
+  
+  .warning-icon {
+    font-size: 1rem;
+  }
 }
 
 .form-summary {
@@ -168,6 +240,26 @@
         box-shadow: none;
       }
     }
+    
+    &.loading {
+      position: relative;
+      color: transparent;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 16px;
+        height: 16px;
+        border: 2px solid transparent;
+        border-top: 2px solid currentColor;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        color: white;
+      }
+    }
   }
 }
 
@@ -180,7 +272,18 @@
   animation: spin 1s linear infinite;
 }
 
-// Responsive Design
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Mobile Responsiveness for Forms
 @media (max-width: 768px) {
   .borrow-form-container {
     padding: 16px;
@@ -198,5 +301,30 @@
   .btn {
     padding: 12px 20px;
     font-size: 1rem;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-control {
+    font-size: 16px; // Prevents zoom on iOS
+    padding: 12px;
+  }
+  
+  .form-summary {
+    padding: 16px;
+    
+    .summary-item {
+      font-size: 0.9rem;
+    }
+  }
+  
+  .form-actions {
+    .btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+    }
   }
 }

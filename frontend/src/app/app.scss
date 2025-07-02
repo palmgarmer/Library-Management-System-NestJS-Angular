@@ -59,21 +59,90 @@
 
 // Responsive
 @media (max-width: 768px) {
-  .header-content {
-    padding: 0 16px;
-    flex-direction: column;
-    height: auto;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    gap: 16px;
+  .app-container {
+    padding-bottom: 80px; // Space for mobile navigation
   }
   
-  .main-nav {
-    gap: 16px;
+  .app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     
-    a {
-      padding: 6px 12px;
-      font-size: 0.9rem;
+    .header-content {
+      padding: 0 16px;
+      height: 56px;
+      flex-direction: column;
+      gap: 12px;
+      
+      .logo-section {
+        .app-title {
+          font-size: 1.3rem;
+        }
+      }
+      
+      .main-nav {
+        width: 100%;
+        justify-content: space-around;
+        padding: 8px 0;
+        border-top: 1px solid #e0e0e0;
+        
+        a {
+          font-size: 0.8rem;
+          padding: 8px 12px;
+          text-align: center;
+          min-width: auto;
+          
+          &.active {
+            background: #e3f2fd;
+            border-radius: 16px;
+          }
+        }
+      }
     }
+  }
+  
+  .app-main {
+    margin-top: 120px; // Account for fixed header height
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header {
+    .header-content {
+      .logo-section {
+        .app-title {
+          font-size: 1.1rem;
+        }
+      }
+      
+      .main-nav {
+        a {
+          font-size: 0.7rem;
+          padding: 6px 8px;
+        }
+      }
+    }
+  }
+  
+  .app-main {
+    padding: 12px;
+  }
+}
+
+// Touch-friendly interactions
+@media (hover: none) and (pointer: coarse) {
+  .main-nav a {
+    min-height: 44px; // iOS recommended touch target size
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  button, .btn {
+    min-height: 44px;
+    touch-action: manipulation; // Prevents double-tap zoom
   }
 }
